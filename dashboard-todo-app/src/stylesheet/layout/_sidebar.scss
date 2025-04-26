@@ -1,0 +1,55 @@
+@use "sass:map";
+@use "../base/variables" as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  height: 100vh;
+  padding: 35px 20px;
+  color: map.get($color, white);
+  background-color: map.get($color, black);
+
+  &-user {
+    margin-bottom: 35px;
+  }
+
+  &-name {
+    font-weight: 600;
+  }
+
+  &-email {
+    font-size: map.get($text, xs);
+  }
+
+  &-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  &-link {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    gap: 16px;
+    font-weight: 500;
+    color: map.get($color, white);
+
+    &-active {
+      background-color: map.get($color, white);
+      color: map.get($color, primary);
+      border-radius: 14px;
+    }
+  }
+
+  &-logout {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    gap: 16px;
+    color: map.get($color, white);
+    background-color: map.get($color, black);
+  }
+}

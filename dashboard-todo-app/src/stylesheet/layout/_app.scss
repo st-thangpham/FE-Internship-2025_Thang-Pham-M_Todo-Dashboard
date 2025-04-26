@@ -1,0 +1,9 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 57px;
+
+  .main-content {
+    display: flex;
+  }
+}
