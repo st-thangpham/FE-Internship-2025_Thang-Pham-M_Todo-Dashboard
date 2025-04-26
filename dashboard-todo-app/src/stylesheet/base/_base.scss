@@ -1,0 +1,7 @@
+@use "sass:map";
+@use "variables" as *;
+
+body {
+  font-family: 'Inter';
+  font-size: map.get($text , base);
+}
