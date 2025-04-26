@@ -1,26 +1,31 @@
+// src/pages/LoginPage.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import AuthForm from './components/AuthForm';
+import { AuthFormType } from '@/shared/utils/enum';
+import { login } from '@/shared/redux/auth/authActions';
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogin = (data: any) => {
+    dispatch(login(data));
+    const loginAccount = JSON.parse(
+      localStorage.getItem('LoginAccount') || 'null'
+    );
+    if (loginAccount) navigate('/dashboard');
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-box">
         <h2 className="auth-title">Welcome Back!</h2>
-        <form className="auth-form">
-          <div className="form-group">
-            <label htmlFor="username">Username:</label>
-            <input type="text" id="username" className="form-input" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" className="form-input" />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            <Link to="/dashboard">Login</Link>
-          </button>
-        </form>
+        <AuthForm type={AuthFormType.login} onSubmit={handleLogin} />
         <p className="auth-link">
-          Don't have and account?{' '}
+          Don't have an account?{' '}
           <Link to="/register" className="link">
             Register
           </Link>

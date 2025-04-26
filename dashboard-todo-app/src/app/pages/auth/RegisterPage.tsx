@@ -1,36 +1,26 @@
+// src/pages/RegisterPage.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import AuthForm from './components/AuthForm';
+import { AuthFormType } from '@/shared/utils/enum';
+import { register } from '@/shared/redux/auth/authActions';
 
 const RegisterPage: React.FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleRegister = (data: any) => {
+    dispatch(register(data));
+    navigate('/login');
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-box">
         <h2 className="auth-title">Register!</h2>
-        <form className="auth-form">
-          <div className="form-group">
-            <label htmlFor="fullname">Full name:</label>
-            <input type="text" id="fullname" className="form-input" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" className="form-input" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" className="form-input" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              className="form-input"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Register
-          </button>
-        </form>
+        <AuthForm type={AuthFormType.register} onSubmit={handleRegister} />
         <p className="auth-link">
           Yes I have an account?{' '}
           <Link to="/login" className="link">
