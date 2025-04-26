@@ -1,7 +1,7 @@
-// src/pages/RegisterPage.tsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import AuthForm from './components/AuthForm';
 import { AuthFormType } from '@/shared/utils/enum';
@@ -12,8 +12,13 @@ const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleRegister = (data: any) => {
-    dispatch(register(data));
-    navigate('/login');
+    try {
+      dispatch(register(data));
+      toast.success('Register successfully!');
+      navigate('/login');
+    } catch (err) {
+      toast.error('Register failed!');
+    }
   };
 
   return (

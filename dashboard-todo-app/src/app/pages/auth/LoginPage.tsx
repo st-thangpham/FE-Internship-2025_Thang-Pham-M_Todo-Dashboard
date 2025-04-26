@@ -1,7 +1,7 @@
-// src/pages/LoginPage.tsx
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import AuthForm from './components/AuthForm';
 import { AuthFormType } from '@/shared/utils/enum';
@@ -16,7 +16,12 @@ const LoginPage: React.FC = () => {
     const loginAccount = JSON.parse(
       localStorage.getItem('LoginAccount') || 'null'
     );
-    if (loginAccount) navigate('/dashboard');
+    if (loginAccount) {
+      toast.success('Login successful!');
+      navigate('/dashboard');
+    } else {
+      toast.error('Invalid email or password!');
+    }
   };
 
   return (
