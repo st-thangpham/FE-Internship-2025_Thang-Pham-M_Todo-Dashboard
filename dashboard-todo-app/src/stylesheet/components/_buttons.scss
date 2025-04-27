@@ -7,9 +7,29 @@
   justify-content: center;
   padding: 8px;
   border-radius: 6px;
+  gap: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 
   &.btn-primary {
     color: map.get($color, white);
     background-color: map.get($color, primary);
+  }
+
+  &.btn-add {
+    background-color: transparent;
+  }
+
+  &.btn-close {
+    background-color: map.get($color, modal);
+    text-decoration: underline;
+  }
+
+  &.btn-icon {
+    width: 36px;
+    height: 36px;
   }
 }

@@ -1,0 +1,66 @@
+@use "sass:map";
+@use "../base/variables" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+
+  .form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+
+    .form-input,
+    .form-textarea {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(161, 163, 171, 1);
+    }
+
+    .form-textarea {
+      height: 150px;
+    }
+
+    .form-error {
+      position: absolute;
+      bottom: -18px;
+      font-size: map.get($text, xxs);
+      color: map.get($color, red);
+    }
+  }
+
+  .form-radio-group {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+
+    .form-radio {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  &.form-create {
+    padding: 24px 16px;
+    border-radius: 3px;
+    border: 1px solid rgba(161, 163, 171, 0.64);
+    background-color: map.get($color, white);
+
+    .form-group {
+      font-size: map.get($text, sm);
+
+      .form-label {
+        font-weight: 600;
+      }
+
+      .form-input {
+        width: 50%;
+      }
+    }
+  }
+}

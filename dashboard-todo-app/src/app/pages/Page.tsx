@@ -1,15 +1,19 @@
-import Sidebar from '@/shared/components/layout/Sidebar';
 import React from 'react';
-
 import { Outlet } from 'react-router-dom';
 
-const Page: React.FC = () => {
-  return (
-    <>
+import Sidebar from '@/shared/layout/Sidebar';
+import Header from '@/shared/layout/Header';
+
+const Page: React.FC = () => (
+  <div className="app-layout">
+    <Header />
+    <div className="main-content">
       <Sidebar />
-      <Outlet />
-    </>
-  );
-};
+      <div className="page-container">
+        <Outlet />
+      </div>
+    </div>
+  </div>
+);
 
 export default Page;

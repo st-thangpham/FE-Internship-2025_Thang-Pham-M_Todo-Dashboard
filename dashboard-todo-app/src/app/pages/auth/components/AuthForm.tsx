@@ -27,7 +27,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type, onSubmit }) => {
   const password = watch('password');
 
   return (
-    <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
       {type === AuthFormType.register && (
         <>
           <div className="form-group">
