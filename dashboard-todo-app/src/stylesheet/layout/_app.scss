@@ -1,9 +1,10 @@
 .app-layout {
   display: flex;
   flex-direction: column;
-  gap: 57px;
+  gap: 3vh;
 
   .main-content {
     display: flex;
+    height: 87vh;
   }
 }

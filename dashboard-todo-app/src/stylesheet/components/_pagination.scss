@@ -1,0 +1,28 @@
+@use "sass:map";
+@use "../base/variables.scss" as *;
+
+.pagination {
+  display: inline-block;
+
+  .page {
+    height: 25px;
+    width: 25px;
+    margin: 0 3px;
+    border-radius: 4px;
+    font-size: map.get($text, sm);
+    color: map.get($color, black-secondary);
+    background-color: map.get($color, selected);
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      background-color: map.get($color, primary);
+      color: map.get($color, white);
+      transform: scale(1.1);
+    }
+  }
+
+  .active {
+    color: map.get($color, white);
+    background-color: map.get($color, primary);
+  }
+}

@@ -5,8 +5,8 @@
   display: flex;
   flex-direction: column;
   width: 20%;
-  height: 100vh;
   padding: 35px 20px;
+  border-radius: 0 8px 8px 0;
   color: map.get($color, white);
   background-color: map.get($color, black);
 
