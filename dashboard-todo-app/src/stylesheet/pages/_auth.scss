@@ -1,0 +1,11 @@
+@use "sass:map";
+@use "../base/variables" as *;
+
+.layout-auth {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: map.get($color, modal);
+}

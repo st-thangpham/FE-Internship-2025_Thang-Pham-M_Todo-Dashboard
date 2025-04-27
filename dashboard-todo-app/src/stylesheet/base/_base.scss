@@ -1,7 +1,9 @@
 @use "sass:map";
-@use "variables" as *;
+@use "./variables" as *;
 
 body {
-  font-family: 'Inter';
+  font-family: "Inter", sans-serif;
   font-size: map.get($text , base);
+  font-weight: 400;
+  color: map.get($color, black);
 }
