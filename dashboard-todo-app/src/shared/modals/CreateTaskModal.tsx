@@ -125,9 +125,6 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ open, onClose }) => {
                   />
                 </label>
               </div>
-              {errors.status && (
-                <span className="form-error">Status is required</span>
-              )}
             </div>
 
             <div className="form-group">
