@@ -38,14 +38,29 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
     register,
     handleSubmit,
     formState: { errors },
+    reset,
+    watch,
   } = useForm<FormData>({
     defaultValues: {
-      title: task.title,
-      description: task.description,
-      status: task.status,
-      createdAt: task.createdAt,
+      title: '',
+      description: '',
+      status: FilterStatusType.notStarted,
+      createdAt: '',
     },
   });
+
+  const watchedStatus = watch('status');
+
+  useEffect(() => {
+    if (open && task) {
+      reset({
+        title: task.title,
+        description: task.description,
+        status: task.status,
+        createdAt: task.createdAt,
+      });
+    }
+  }, [open, reset]);
 
   const onSubmit = (data: FormData) => {
     if (!task) return;
@@ -74,7 +89,9 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
                 className="form-input"
                 {...register('title', { required: true })}
               />
-              {errors.title && <span className="form-error">Required</span>}
+              {errors.title && (
+                <span className="form-error">Title is required</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -84,7 +101,9 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
                 className="form-input"
                 {...register('createdAt', { required: true })}
               />
-              {errors.createdAt && <span className="form-error">Required</span>}
+              {errors.createdAt && (
+                <span className="form-error">Date is required</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -98,7 +117,7 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
                     type="radio"
                     value={FilterStatusType.notStarted}
                     {...register('status', { required: true })}
-                    defaultChecked
+                    checked={watchedStatus === FilterStatusType.notStarted}
                   />
                 </label>
 
@@ -110,6 +129,7 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
                     type="radio"
                     value={FilterStatusType.inProgress}
                     {...register('status', { required: true })}
+                    checked={watchedStatus === FilterStatusType.inProgress}
                   />
                 </label>
 
@@ -121,12 +141,10 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
                     type="radio"
                     value={FilterStatusType.completed}
                     {...register('status', { required: true })}
+                    checked={watchedStatus === FilterStatusType.completed}
                   />
                 </label>
               </div>
-              {errors.status && (
-                <span className="form-error">Status is required</span>
-              )}
             </div>
 
             <div className="form-group">
@@ -137,20 +155,16 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
                 {...register('description', { required: true })}
               />
               {errors.description && (
-                <span className="form-error">Required</span>
+                <span className="form-error">Description is required</span>
               )}
             </div>
-          </form>
 
-          <div className="modal-footer">
-            <button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              className="btn btn-primary"
-            >
-              Update
-            </button>
-          </div>
+            <div className="modal-footer">
+              <button type="submit" className="btn btn-primary">
+                Update
+              </button>
+            </div>
+          </form>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
