@@ -6,7 +6,7 @@ import TaskDetail from './TaskDetail';
 
 const taskDetailRoutes: RouteObject[] = [
   {
-    path: '/mytask/:id',
+    path: '/mytask/:taskId',
     element: React.createElement(TaskDetail),
   },
 ];

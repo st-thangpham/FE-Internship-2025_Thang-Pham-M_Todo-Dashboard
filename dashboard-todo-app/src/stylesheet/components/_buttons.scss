@@ -20,11 +20,14 @@
   }
 
   &.btn-add {
+    font-size: map.get($text, xs);
+    color: map.get($color, input);
     background-color: transparent;
   }
 
   &.btn-close {
-    background-color: map.get($color, modal);
+    font-size: map.get($text, sm);
+    background-color: transparent;
     text-decoration: underline;
   }
 

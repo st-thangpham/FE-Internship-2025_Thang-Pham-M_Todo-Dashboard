@@ -2,7 +2,7 @@ export const ACCOUNT_KEY = 'Account';
 export const LOGIN_KEY = 'LoginAccount';
 export const TASK_KEY = 'TASKS';
 
-export const pageSize = 4;
+export const pageSize = 5;
 
 export enum AuthFormType {
   login = 'login',
@@ -18,5 +18,5 @@ export enum FilterStatusType {
 
 export enum SortType {
   newest = 'Newest',
-  oldest = 'oldest',
+  oldest = 'Oldest',
 }

@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+
 import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import AuthForm from './components/AuthForm';
-import { AuthFormType } from '@/shared/utils/enum';
 import { login } from '@/shared/redux/auth/authActions';
+import { AuthFormType } from '@/shared/utils/enum';
+import AuthForm from './components/AuthForm';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();

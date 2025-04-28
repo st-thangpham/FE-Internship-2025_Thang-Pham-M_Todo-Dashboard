@@ -1,11 +1,5 @@
+import { Account } from './authActions';
 import { ACCOUNT_KEY, LOGIN_KEY } from '@/shared/utils/enum';
-
-export interface Account {
-  username: string;
-  password: string;
-  fullname?: string;
-  email?: string;
-}
 
 export const getAccounts = (): Account[] => {
   return JSON.parse(localStorage.getItem(ACCOUNT_KEY) || '[]');

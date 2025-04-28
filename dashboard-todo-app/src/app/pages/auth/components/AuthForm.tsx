@@ -1,5 +1,6 @@
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { AuthFormType } from '@/shared/utils/enum';
 

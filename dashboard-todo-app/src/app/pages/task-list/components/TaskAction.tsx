@@ -1,16 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
+import CreateTaskModal from '@/shared/modals/CreateTaskModal';
 import { RootState } from '@/shared/redux/store';
 import {
-  setSearch,
   setFilter,
+  setSearch,
   setSortOrder,
 } from '@/shared/redux/task/taskActions';
 import { FilterStatusType, SortType } from '@/shared/utils/enum';
-import CreateTaskModal from '../modals/CreateTaskModal';
 
 import AddIcon from '@/assets/icons/icon-add.svg';
 
@@ -78,7 +79,6 @@ const TaskAction: React.FC = () => {
         </select>
       </div>
 
-      {/* Modal */}
       <CreateTaskModal open={isModalOpen} onClose={handleCloseModal} />
     </div>
   );

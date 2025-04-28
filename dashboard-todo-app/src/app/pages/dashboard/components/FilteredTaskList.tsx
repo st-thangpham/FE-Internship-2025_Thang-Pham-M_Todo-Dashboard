@@ -2,8 +2,9 @@ import React from 'react';
 
 import { RootState } from '@/shared/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { FilterStatusType, pageSize, SortType } from '@/shared/utils/enum';
+import { FilterStatusType, pageSize } from '@/shared/utils/enum';
 import {
   formatDate,
   getStatusIcon,
@@ -11,34 +12,23 @@ import {
   isToday,
 } from '@/shared/utils/taskHelpers';
 
-interface TaskListItemsProps {
-  selectedTaskId: string | null;
-  onTaskSelect: (taskId: string) => void;
+interface FilteredTaskListProps {
+  statuses: FilterStatusType[];
 }
 
-const TaskListItems: React.FC<TaskListItemsProps> = ({
-  selectedTaskId,
-  onTaskSelect,
-}) => {
+const FilteredTaskList: React.FC<FilteredTaskListProps> = ({ statuses }) => {
   const dispatch = useDispatch();
-  const { tasks, search, filter, sortOrder, currentPage } = useSelector(
-    (state: RootState) => state.task
+  const { tasks } = useSelector((state: RootState) => state.task);
+
+  const filteredTasks = tasks.filter((task) => statuses.includes(task.status));
+
+  const sortedTasks = [...filteredTasks].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
-  const filteredTasks = tasks
-    .filter(
-      (task) =>
-        (filter === FilterStatusType.all || task.status === filter) &&
-        task.title.toLowerCase().includes(search.toLowerCase())
-    )
-    .sort((a, b) =>
-      sortOrder === SortType.newest
-        ? new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        : new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    )
-    .slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const recentTasks = sortedTasks.slice(0, pageSize);
 
-  const groupedTasks = filteredTasks.reduce(
+  const groupedTasks = recentTasks.reduce(
     (groups: Record<string, typeof tasks>, task) => {
       const date = new Date(task.createdAt).toLocaleDateString();
       if (!groups[date]) {
@@ -61,12 +51,7 @@ const TaskListItems: React.FC<TaskListItemsProps> = ({
             )}
           </h4>
           {groupedTasks[date].map((task) => (
-            <div
-              key={task.id}
-              className={`task-item${
-                task.id === selectedTaskId ? ' selected' : ''
-              }`}
-            >
+            <div className="task-item">
               <div
                 className="task-status"
                 onClick={() =>
@@ -75,10 +60,7 @@ const TaskListItems: React.FC<TaskListItemsProps> = ({
               >
                 {getStatusIcon(task.status)}
               </div>
-              <div
-                className="task-content"
-                onClick={() => onTaskSelect(task.id)}
-              >
+              <Link to={`/mytask/${task.id}`} className="task-content">
                 <h3 className="task-title">{task.title}</h3>
                 <p className="task-summary">{task.description}</p>
                 <div className="task-info">
@@ -95,7 +77,7 @@ const TaskListItems: React.FC<TaskListItemsProps> = ({
                   </p>
                   <p className="task-info-date">Created on: {task.createdAt}</p>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>
@@ -104,4 +86,4 @@ const TaskListItems: React.FC<TaskListItemsProps> = ({
   );
 };
 
-export default TaskListItems;
+export default FilteredTaskList;

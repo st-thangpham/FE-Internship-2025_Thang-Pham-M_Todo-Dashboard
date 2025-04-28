@@ -1,15 +1,16 @@
 import React from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
-import { RootState } from '@/shared/redux/store';
 import { logout } from '@/shared/redux/auth/authActions';
+import { RootState } from '@/shared/redux/store';
 
-import DashboardIcon from '@/assets/icons/icon-dashboard.svg';
 import DashboardActive from '@/assets/icons/icon-dashboard-active.svg';
-import MyTaskIcon from '@/assets/icons/icon-mytask.svg';
-import MyTaskActive from '@/assets/icons/icon-mytask-active.svg';
+import DashboardIcon from '@/assets/icons/icon-dashboard.svg';
 import LogoutIcon from '@/assets/icons/icon-logout.svg';
+import MyTaskActive from '@/assets/icons/icon-mytask-active.svg';
+import MyTaskIcon from '@/assets/icons/icon-mytask.svg';
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();

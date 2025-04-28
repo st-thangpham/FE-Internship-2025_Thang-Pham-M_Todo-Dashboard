@@ -1,11 +1,13 @@
 // src/pages/TaskList.tsx
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+
 import { RootState } from '@/shared/redux/store';
+import { useSelector } from 'react-redux';
+
 import TaskAction from './components/TaskAction';
+import TaskItemDetail from './components/TaskItemDetail';
 import TaskListItems from './components/TaskListItems';
 import TaskPagination from './components/taskPagination';
-import TaskItemDetail from './components/TaskItemDetail';
 
 const TaskList: React.FC = () => {
   const tasks = useSelector((state: RootState) => state.task.tasks);

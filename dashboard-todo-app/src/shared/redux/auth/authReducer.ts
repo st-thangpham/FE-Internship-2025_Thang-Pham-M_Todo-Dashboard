@@ -1,11 +1,11 @@
-import { REGISTER, LOGIN, LOGOUT } from './authActionTypes';
+import { Account } from './authActions';
+import { LOGIN, LOGOUT, REGISTER } from './authActionTypes';
 import {
   getAccounts,
-  saveAccount,
   getLoginAccount,
-  saveLoginAccount,
   removeLoginAccount,
-  Account,
+  saveAccount,
+  saveLoginAccount,
 } from './authStorage';
 
 interface AuthState {
@@ -33,7 +33,6 @@ const authReducer = (state = initialState, action: any): AuthState => {
         saveLoginAccount(found);
         return { ...state, loginAccount: found };
       } else {
-        alert('Invalid username or password');
         return state;
       }
 
