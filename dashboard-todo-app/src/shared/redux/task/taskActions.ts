@@ -1,13 +1,17 @@
+import { RootState } from '@/shared/redux/store';
 import { FilterStatusType, SortType } from '@/shared/utils/enum';
+import { nanoid } from '@reduxjs/toolkit';
+import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import {
-  CREATE_TASK,
-  UPDATE_TASK,
-  DELETE_TASK,
-  SET_SEARCH,
-  SET_FILTER,
-  SET_SORT_ORDER,
-  SET_PAGE,
   CHANGE_STATUS,
+  CREATE_TASK,
+  DELETE_TASK,
+  SET_FILTER,
+  SET_PAGE,
+  SET_SEARCH,
+  SET_SORT_ORDER,
+  UPDATE_TASK,
 } from './taskActionTypes';
 
 export interface Task {
@@ -16,12 +20,27 @@ export interface Task {
   description: string;
   status: FilterStatusType;
   createdAt: string;
+  userId: string;
 }
 
-export const createTask = (task: Task) => ({
-  type: CREATE_TASK,
-  payload: task,
-});
+type ThunkResult<R> = ThunkAction<R, RootState, unknown, AnyAction>;
+
+export const createTask = (
+  task: Omit<Task, 'id' | 'userId'>
+): ThunkResult<void> => {
+  return (dispatch, getState) => {
+    const { loginAccount } = getState().auth;
+    const newTask: Task = {
+      ...task,
+      id: nanoid(),
+      userId: loginAccount.id,
+    };
+    dispatch({
+      type: CREATE_TASK,
+      payload: newTask,
+    });
+  };
+};
 
 export const updateTask = (task: Task) => ({
   type: UPDATE_TASK,
@@ -31,6 +50,11 @@ export const updateTask = (task: Task) => ({
 export const deleteTask = (id: string) => ({
   type: DELETE_TASK,
   payload: id,
+});
+
+export const changeTaskStatus = (id: string, status: FilterStatusType) => ({
+  type: CHANGE_STATUS,
+  payload: { id, status },
 });
 
 export const setSearch = (search: string) => ({
@@ -51,9 +75,4 @@ export const setSortOrder = (sortOrder: SortType) => ({
 export const setPage = (page: number) => ({
   type: SET_PAGE,
   payload: page,
-});
-
-export const changeTaskStatus = (id: string, status: FilterStatusType) => ({
-  type: CHANGE_STATUS,
-  payload: { id, status },
 });

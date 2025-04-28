@@ -1,10 +1,10 @@
-// src/pages/components/UpdateTaskModal.tsx
 'use client';
 
 import React, { useEffect } from 'react';
+
 import * as Dialog from '@radix-ui/react-dialog';
-import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { RootState } from '@/shared/redux/store';
@@ -37,31 +37,19 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      title: task?.title || '',
-      description: task?.description || '',
-      status: task?.status || FilterStatusType.notStarted,
-      createdAt: task?.createdAt || new Date().toISOString().split('T')[0],
+      title: task.title,
+      description: task.description,
+      status: task.status,
+      createdAt: task.createdAt,
     },
   });
 
-  useEffect(() => {
-    if (task) {
-      reset({
-        title: task.title,
-        description: task.description,
-        status: task.status,
-        createdAt: task.createdAt,
-      });
-    }
-  }, [task, reset]);
-
   const onSubmit = (data: FormData) => {
     if (!task) return;
-    dispatch(updateTask({ id: task.id, ...data }));
+    dispatch(updateTask({ ...task, ...data }));
     toast.success('Task updated successfully!');
     onClose();
   };
@@ -102,19 +90,43 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
             <div className="form-group">
               <label className="form-label">Status</label>
               <div className="form-radio-group">
-                {Object.values(FilterStatusType).map((st) => (
-                  <label key={st} className="form-radio">
-                    <input
-                      type="radio"
-                      value={st}
-                      {...register('status', { required: true })}
-                      defaultChecked={task?.status === st}
-                    />
-                    <span className="form-radio-label">{st}</span>
-                  </label>
-                ))}
+                <label className="form-radio">
+                  <span className="form-radio-label">
+                    {FilterStatusType.notStarted}
+                  </span>
+                  <input
+                    type="radio"
+                    value={FilterStatusType.notStarted}
+                    {...register('status', { required: true })}
+                    defaultChecked
+                  />
+                </label>
+
+                <label className="form-radio">
+                  <span className="form-radio-label">
+                    {FilterStatusType.inProgress}
+                  </span>
+                  <input
+                    type="radio"
+                    value={FilterStatusType.inProgress}
+                    {...register('status', { required: true })}
+                  />
+                </label>
+
+                <label className="form-radio">
+                  <span className="form-radio-label">
+                    {FilterStatusType.completed}
+                  </span>
+                  <input
+                    type="radio"
+                    value={FilterStatusType.completed}
+                    {...register('status', { required: true })}
+                  />
+                </label>
               </div>
-              {errors.status && <span className="form-error">Required</span>}
+              {errors.status && (
+                <span className="form-error">Status is required</span>
+              )}
             </div>
 
             <div className="form-group">

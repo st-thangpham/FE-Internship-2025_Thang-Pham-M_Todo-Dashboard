@@ -1,9 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Pagination from '@/shared/components/Pagination';
+
 import { RootState } from '@/shared/redux/store';
 import { setPage } from '@/shared/redux/task/taskActions';
-import { FilterStatusType } from '@/shared/utils/enum';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Pagination from '@/shared/components/Pagination';
+import { FilterStatusType, pageSize } from '@/shared/utils/enum';
 
 const TaskPagination: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,7 +20,7 @@ const TaskPagination: React.FC = () => {
     );
   });
 
-  const totalPage = Math.ceil(filteredTasks.length / 4);
+  const totalPage = Math.ceil(filteredTasks.length / pageSize);
 
   return (
     <div className="task-pagination">

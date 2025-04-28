@@ -1,16 +1,19 @@
+import { nanoid } from '@reduxjs/toolkit';
 import { REGISTER, LOGIN, LOGOUT } from './authActionTypes';
 
-interface Account {
+export interface Account {
+  id: string;
   username: string;
   password: string;
   fullname?: string;
   email?: string;
 }
 
-export const register = (account: Account) => {
+export const register = (account: Omit<Account, 'id'>) => {
+  const newAccount: Account = { ...account, id: nanoid() };
   return {
     type: REGISTER,
-    payload: account,
+    payload: newAccount,
   };
 };
 
@@ -21,8 +24,6 @@ export const login = (credentials: { username: string; password: string }) => {
   };
 };
 
-export const logout = () => {
-  return {
-    type: LOGOUT,
-  };
-};
+export const logout = () => ({
+  type: LOGOUT,
+});

@@ -1,12 +1,15 @@
 'use client';
 
 import React from 'react';
+
 import * as Dialog from '@radix-ui/react-dialog';
-import { useDispatch } from 'react-redux';
-import { createTask } from '@/shared/redux/task/taskActions';
 import { useForm } from 'react-hook-form';
-import { FilterStatusType } from '@/shared/utils/enum';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+
+import { createTask } from '@/shared/redux/task/taskActions';
+import { FilterStatusType } from '@/shared/utils/enum';
+import { AppDispatch } from '../redux/store';
 
 interface CreateTaskModalProps {
   open: boolean;
@@ -21,7 +24,7 @@ interface FormData {
 }
 
 const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ open, onClose }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
@@ -36,7 +39,6 @@ const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ open, onClose }) => {
 
   const onSubmit = (data: FormData) => {
     const newTask = {
-      id: new Date().toISOString(),
       title: data.title,
       description: data.description,
       status: data.status,

@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { Outlet } from 'react-router-dom';
 
-import Sidebar from '@/shared/layout/Sidebar';
 import Header from '@/shared/layout/Header';
+import Sidebar from '@/shared/layout/Sidebar';
 
 const Page: React.FC = () => (
   <div className="app-layout">

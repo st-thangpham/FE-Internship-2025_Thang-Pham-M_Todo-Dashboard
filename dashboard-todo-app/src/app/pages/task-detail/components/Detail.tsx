@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import { RootState } from '@/shared/redux/store';
 import { deleteTask } from '@/shared/redux/task/taskActions';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
 import DeleteIcon from '@/assets/icons/icon-delete.svg';
 import EditIcon from '@/assets/icons/icon-edit.svg';
 import UpdateTaskModal from '@/shared/modals/UpdateTaskModal';
 
-interface TaskItemDetailProps {
+interface DetailProps {
   taskId: string;
-  onDelete: (deletedId: string) => void;
 }
 
-const TaskItemDetail: React.FC<TaskItemDetailProps> = ({
-  taskId,
-  onDelete,
-}) => {
+const Detail: React.FC<DetailProps> = ({ taskId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const task = useSelector((state: RootState) =>
     state.task.tasks.find((t) => t.id === taskId)
   );
@@ -30,15 +29,24 @@ const TaskItemDetail: React.FC<TaskItemDetailProps> = ({
   const handleDelete = () => {
     dispatch(deleteTask(task.id));
     toast.success('Task deleted successfully!');
-    onDelete(task.id);
+    navigate('/dashboard');
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
   };
 
   const openEdit = () => setIsEditOpen(true);
   const closeEdit = () => setIsEditOpen(false);
 
   return (
-    <>
-      <h2 className="task-title">{task.title}</h2>
+    <div className="task-detail">
+      <div className="task-detail-header">
+        <h2 className="task-title">{task.title}</h2>
+        <button className="btn btn-close" onClick={handleGoBack}>
+          Go back
+        </button>
+      </div>
       <p className="task-info-status">
         Status:{' '}
         <span className={task.status.toLowerCase().replace(/\s+/g, '-')}>
@@ -67,8 +75,8 @@ const TaskItemDetail: React.FC<TaskItemDetailProps> = ({
           taskId={task.id}
         />
       )}
-    </>
+    </div>
   );
 };
 
-export default TaskItemDetail;
+export default Detail;
